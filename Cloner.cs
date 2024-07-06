@@ -28,9 +28,7 @@ public class Cloner : MonoBehaviour
                     clone = GameObject.Instantiate(g, new Vector3( g.transform.position.x, g.transform.position.y + (g.GetComponent<SpriteRenderer>().bounds.size.y * cloneIterator), 0), Quaternion.identity); 
                     cloneIterator+=direction;  
             }     
-            g.transform.position=origin; 
-            
-        
+            g.transform.position=origin;   
     } 
 
 
@@ -50,8 +48,12 @@ public class Cloner : MonoBehaviour
     
 
     public static void spawnProjectile(GameObject g, Vector3 velocity, int lifetimeMillis){
-        if (!g.CompareTag("Clone")){
-            GameObject clone = GameObject.Instantiate(g, g.transform.position, Quaternion.identity);
+       spawnProjectile(g, g.transform.position, velocity, lifetimeMillis); 
+    }
+
+    public static void spawnProjectile(GameObject g, Vector3 origin, Vector3 velocity, int lifetimeMillis){
+         if (!g.CompareTag("Clone")){
+            GameObject clone = GameObject.Instantiate(g, origin, Quaternion.identity);
             clone.tag = "Clone";
             clone.GetComponent<Rigidbody>().AddForce(velocity, ForceMode.Impulse);
             GameObject.Destroy(clone, lifetimeMillis / 1000f);
